@@ -3,21 +3,29 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Stack,
+  Box,
   Button,
+  Avatar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import PersonIcon from "@mui/icons-material/Person";
 import { Link } from "react-router-dom";
+import useUser from "../store/userStore";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const { user, logoutUser } = useUser();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutUser(); 
+    navigate("/"); 
+  };
+
   return (
     <AppBar
       sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
         boxShadow: 3,
+        backgroundColor: "#0C3B2E",
       }}
     >
       <Toolbar>
@@ -28,55 +36,150 @@ const Navbar = () => {
         >
           <MenuIcon />
         </IconButton>
+
         <Typography
           variant="h6"
           component="div"
-          sx={{ flexGrow: 1, fontSize: "16px" }}
+          sx={{ fontSize: "16px", color: "white" }}
         >
           Bloggit
         </Typography>
-        <Stack
+
+        <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
             gap: 4,
-            alignItems: "centre",
-            justifyContent: "centre",
-          }}
-          flexGrow={1}
-        >
-          <Button
-            sx={{ color: "white", fontSize: "16px" }}
-            component={Link}
-            to="/"
-          >
-            Home
-          </Button>
-          <Button
-            sx={{ color: "white", fontSize: "16px" }}
-            component={Link}
-            to="/Login"
-          >
-            Login
-          </Button>
-          <Button
-            sx={{ color: "white", fontSize: "16px" }}
-            component={Link}
-            to="/Signup"
-          >
-            SignUp
-          </Button>
-        </Stack>
-        <IconButton
-          size="large"
-          edge="end"
-          aria-label="logo"
-          sx={{
-            display: { xs: "none", sm: "block", md: "flex", color: "inherit" },
+            ml: "auto",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <PersonIcon />
-        </IconButton>
+          {user ? (
+            <>
+              <Button
+                variant="contained"
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#609773",
+                }}
+                component={Link}
+                to="/"
+              >
+                Home
+              </Button>
+              <Button
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#609773",
+                }}
+                component={Link}
+                to="/MyBlogs"
+              >
+                My Blogs
+              </Button>
+              <Button
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#609773",
+                }}
+                component={Link}
+                to="/Createblog"
+              >
+                Create Blog
+              </Button>
+              <Button
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#609773",
+                }}
+                component={Link}
+                to="/blogs"
+              >
+                Blogs
+              </Button>
+              <Button
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#609773",
+                }}
+                component={Link}
+                to="/profile"
+              >
+                Profile
+              </Button>
+              <Button
+                onClick={handleLogout}
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#C62828",
+                }}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant="contained"
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#609773",
+                }}
+                component={Link}
+                to="/"
+              >
+                Home
+              </Button>
+              <Button
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#609773",
+                }}
+                component={Link}
+                to="/login"
+              >
+                Login
+              </Button>
+              <Button
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#609773",
+                }}
+                component={Link}
+                to="/blogs"
+              >
+                Blogs
+              </Button>
+              <Button
+                sx={{
+                  color: "white",
+                  fontSize: "16px",
+                  backgroundColor: "#609773",
+                }}
+                component={Link}
+                to="/signup"
+              >
+                SignUp
+              </Button>
+            </>
+          )}
+        </Box>
+
+        {user && (
+          <Avatar sx={{ ml: 1 }} component={Link} to="/profile">
+            {user.firstName?.[0]?.toUpperCase() || ""}
+            {user.secondName?.[0]?.toUpperCase() || ""}
+          </Avatar>
+        )}
       </Toolbar>
     </AppBar>
   );

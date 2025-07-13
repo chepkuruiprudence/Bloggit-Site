@@ -38,7 +38,12 @@ const Herosetion = () => {
         onClick={Signup}
         component={Link}
         to="/login"
-        sx={{ position: "relative", size: "large", fontSize: "16px" }}
+        sx={{
+          position: "relative",
+          size: "large",
+          fontSize: "16px",
+          backgroundColor: "#609773",
+        }}
       >
         Get Started
       </Button>

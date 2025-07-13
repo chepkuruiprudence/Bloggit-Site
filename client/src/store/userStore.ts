@@ -1,35 +1,34 @@
-import { create, type StateCreator } from 'zustand';
-import {persist} from 'zustand/middleware'
+import { create, type StateCreator } from "zustand";
+import { persist } from "zustand/middleware";
 
-interface User{
-  firstName: string,
-  secondName: string,
-  email: string,
-  password: string,
+interface User {
+  firstName: string;
+  userName: string;
+  secondName: string;
+  email: string;
+  password: string;
 }
 
-interface UserStore{
+interface UserStore {
   user: User | null;
   setUser: (userData: User) => void;
   logoutUser: () => void;
 }
 
 const UserStore: StateCreator<UserStore> = (set) => {
-  return{
+  return {
     user: null,
     setUser: (user: User) => {
-      set(function(){
-        return{user};
+      set(function () {
+        return { user };
       });
     },
     logoutUser: () => {
-      set(function(){
-        return{user: null}
-      })
-    }
+      localStorage.removeItem("token");
+            set({ user: null });
+    },
   };
 };
 
-
-const useUser = create(persist(UserStore, {name: "Bloggit-User"}))
+const useUser = create(persist(UserStore, { name: "Bloggit-User" }));
 export default useUser;

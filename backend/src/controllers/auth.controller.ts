@@ -1,7 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "@Prisma/client";
-import jwt from "jsonwebtoken"
+import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";
+import { data } from "react-router-dom";
 
 const client = new PrismaClient();
 
@@ -18,66 +19,60 @@ export const registerUser = async (req: Request, res: Response) => {
         userName,
         password: hashedPassword,
         email,
-        avatarUrl: avatarInitials,
+        avatar: avatarInitials,
       },
     });
-    res.status(201).json({ message: "registered successfully." });
+        res.status(201).json({ message: "registered successfully." });
   } catch (e) {
-    console.error("🔥 ERROR: ", e);
+    console.error("ERROR: ", e);
     res.status(500).json({ message: "An error occured" });
   }
 };
 
 export const loginUser = async (req: Request, res: Response) => {
- try {
+  try {
+    const users = await client.user.findMany();
+            const { userHandle, password } = req.body;
 
-  const {userHandle, password} = req.body;
-
-  if (!userHandle || !password) {
-   return res
-     .status(400)
-     .json({ message: "Both userHandle and password are required." });
- }
-
-  const user = await client.user.findFirst({
-    where: {
-      OR: [
-        { userName: userHandle },
-        { email: userHandle }
-      ]
+    if (!userHandle || !password) {
+      return res
+        .status(400)
+        .json({ message: "Both userHandle and password are required." });
     }
-  })
 
-  if (!user) {
-   res.status(400).json({message:"Wrong Credentials"})
-   return;
+    const user = await client.user.findFirst({
+      where: {
+        OR: [{ userName: userHandle }, { email: userHandle }],
+      },
+    });
+
+        if (!user) {
+      return res.status(400).json({ message: "Wrong Credentials" });
+    }
+
+    const matchPassword = await bcrypt.compare(password, user.password);
+        if (!matchPassword) {
+      return res.status(400).json({ message: "Wrong Cridentials" });
+    }
+
+    const { password: userPassword, avatar, updatedAt, ...userDetails } = user;
+
+    const payload = {
+      id: user.id,
+      userName: user.userName,
+      email: user.email,
+      avatar: user.avatar,
+    };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
+      expiresIn: "2h",
+    });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+        res
+      .status(200)
+      .json({ message: "logged in successfully.", token, user: userDetails });
+  } catch (e) {
+    console.error(" ERROR: ", e);
+    res.status(500).json({ message: "An error occured" });
   }
-
-  const matchPassword = await bcrypt.compare(password, user.password)
-
-  if (!matchPassword) {
-   res.status(400).json({message: "Wrong Cridentials"})
-   return
-  }
-
-  const { password: userPassword, avatarUrl, updatedAt, ...userDetails } = user;
-
-  const payload = {
-   id: user.id,
-   userName: user.userName,
-   email: user.email,
- };
- 
-  const token = jwt.sign(userDetails, process.env.JWT_SECRET as string, {expiresIn: "1m" })
-
-
-   res.status(200).json({ message: "logged in successfully.",
-    token,
-    user: userDetails
-   });
- } catch (e) {
-   console.error(" ERROR: ", e);
-   res.status(500).json({ message: "An error occured" });
- }
 };
-

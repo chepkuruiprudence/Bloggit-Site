@@ -19,27 +19,27 @@ model user {
   secondName String   @map("second_Name")
   email      String   @unique @map("Email")
   userName   String   @unique @map("UserName")
-  avatarUrl  String
+  avatar  String
   password   String   @map("passWord")
   isDeleted  Boolean  @default(false)
-  updatedAt  DateTime @default(now())@map("last_update")
+  updatedAt  DateTime @default(now()) @map("last_update")
 
-  blogs Blogs[]
- 
+  blogs Blog[]
 
   @@map("User")
 }
 
-model Blogs {
+model Blog {
   id        String   @id @default(uuid())
   title     String
   synopsis  String
   content   String
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
   isDeleted Boolean  @default(false)
-  avatarUrl  String
-  authorId    String
-  image      String
+  avatar String?
+  authorId  String
+  image     String
 
   author user @relation(fields: [authorId], references: [id])
 

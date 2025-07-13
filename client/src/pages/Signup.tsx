@@ -42,8 +42,7 @@ const Signup = () => {
         "http://localhost:5000/api/auth/register",
         newUser,
       );
-      console.log(response);
-      return response.data;
+            return response.data;
     },
     onError: (err) => {
       if (axios.isAxiosError(err)) {
@@ -64,8 +63,7 @@ const Signup = () => {
       return;
     }
     const newUser = { firstName, secondName, userName, email, password };
-    console.log("newUser");
-    mutate(newUser);
+        mutate(newUser);
   }
   return (
     <Box
@@ -157,6 +155,7 @@ const Signup = () => {
             size="large"
             onClick={handleSignUp}
             loading={isPending}
+            sx={{ backgroundColor: "#609773" }}
           >
             Sign Up
           </Button>
