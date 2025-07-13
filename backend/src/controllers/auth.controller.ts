@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
-import { data } from "react-router-dom";
 
 const client = new PrismaClient();
 
