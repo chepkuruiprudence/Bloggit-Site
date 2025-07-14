@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import Bloglist from "./pages/Bloglist";
 import "./App.css";
 const client = new QueryClient();
+import Protectedroutes from "./utils/protectedroutes";
 
 
 
@@ -22,14 +23,16 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Herosection />} />
-          <Route path="/Signup" element={<Signup />} />
-          <Route path="/Login" element={<Login />} />
+          <Route  element = {<Protectedroutes/>}>
           <Route path="/Createblog" element={<Createblog />} />
           <Route path="/Myblogs" element={<Myblogs />} />
           <Route path="/blogs/:blogId" element={<SingleBlog />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/blogs" element={<Bloglist />} />
+          </Route>
+          <Route path="/" element={<Herosection />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/Login" element={<Login />} />
         </Routes>
         <Footer />
       </Router>

@@ -5,6 +5,7 @@ import {
   Container,
   CircularProgress,
   Alert,
+  Stack
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
@@ -24,13 +25,8 @@ interface Blog {
   };
 }
 
-const fetchSingleBlog = async (blogId: string): Promise<Blog> => {
-  const response = await axiosInstance.get(`/api/blogs/${blogId}`);
-  return response.data;
-};
-
 const SingleBlog = () => {
-  const { blogId } = useParams<{ blogId: string }>();
+  const { blogId } = useParams();
 
   const {
     data: blog,
@@ -39,23 +35,19 @@ const SingleBlog = () => {
     error,
   } = useQuery<Blog, Error>({
     queryKey: ["singleBlog", blogId],
-    queryFn: () => fetchSingleBlog(blogId!),
+    queryFn: async () => {
+      const response = await axiosInstance.get(`/api/blogs/${blogId}`);
+      return response.data;
+    },
     enabled: !!blogId, 
   });
 
   if (isLoading) {
     return (
-      <Box
-        sx={{
-          textAlign: "center",
-          mt: 6,
-          border: "5px solid red",
-          marginTop: 10,
-        }}
-      >
+      <Stack sx={{ p: 5 }} alignItems={"center"}>
         <CircularProgress />
-        <Typography>Loading blog...</Typography>
-      </Box>
+        <Typography>Loading Blog...</Typography>
+      </Stack>
     );
   }
 
@@ -67,7 +59,9 @@ const SingleBlog = () => {
     );
   }
 
-  if (!blog) return null;
+  if (!blog) {
+    return <Typography>No blog found.</Typography>;
+  }
 
   return (
     <Container

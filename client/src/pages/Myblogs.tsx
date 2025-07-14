@@ -27,9 +27,9 @@ interface Blog {
 
 const Myblogs = () => {
   const { data, isLoading, isError, error } = useQuery<Blog[], Error>({
-    queryKey: ["blogs"],
+    queryKey: ["myblogs"],
     queryFn: async () => {
-      const response = await axiosInstance.get("/api/blogs");
+      const response = await axiosInstance.get("/api/user/blogs");
       return response.data;
     },
   });
@@ -82,6 +82,13 @@ const Myblogs = () => {
             </Grid>
           ))}
       </Grid>
+
+      {data?.length === 0 && (
+  <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+    You haven't created any blogs yet.
+  </Typography>
+)}
+
     </Box>
   );
 };

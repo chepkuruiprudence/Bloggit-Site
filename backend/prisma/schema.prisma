@@ -26,7 +26,6 @@ model user {
 
   blogs Blog[]
 
-  @@map("User")
 }
 
 model Blog {

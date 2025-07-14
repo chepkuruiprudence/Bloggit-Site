@@ -15,6 +15,7 @@ router.get("/", authenticateToken, getUserProfile);
 router.patch("/", authenticateToken, updateUserProfile);
 
 router.patch("/password", authenticateToken, updateUserPassword);
+
 router.get("/blogs", authenticateToken, getUserBlogs);
 
 export default router;
