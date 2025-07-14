@@ -12,22 +12,17 @@ const port: number = parseInt(process.env.PORT as string, 10) || 5000;
 const app = express();
 app.use(express.json());
 
-app.use(
-  cors({
-    // origin: ["https://bloggit-site-backend.onrender.com"],
-
-   origin: [
-  "https://bloggit-site.vercel.app",
-   "http://localhost:5173",
-],
 
 
-    methods: ["POST", "GET", "PUT", "PATCH", "DELETE"],
-    credentials: true,
-  }),
-  
-);
+const allowedOrigins = [
+  "http://localhost:5173",                     
+  "https://bloggit-site.vercel.app"           
+];
 
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,           
+}));
 app.use("/api/auth", authRouter);
 app.use("/api/blogs", authenticateToken, blogRouter);
 app.use("/api/user", userRouter);
