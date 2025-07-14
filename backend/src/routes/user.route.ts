@@ -11,7 +11,6 @@ const router = express.Router();
 
 router.get("/", authenticateToken, getUserProfile);
 
-
 router.patch("/", authenticateToken, updateUserProfile);
 
 router.patch("/password", authenticateToken, updateUserPassword);

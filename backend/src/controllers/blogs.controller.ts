@@ -26,7 +26,7 @@ export const getAllBlogs = async (req: Request, res: Response) => {
 
 export const createBlog = async (req: Request, res: Response) => {
   try {
-        const { title, synopsis, content, image } = req.body;
+    const { title, synopsis, content, image } = req.body;
     const { id, avatar } = (req as any).user;
 
     if (!title || !synopsis || !content || !image) {
@@ -107,21 +107,21 @@ export const updateBlog = async (req: Request, res: Response) => {
 
 export const deleteBlog = async (req: Request, res: Response) => {
   try {
-        const { blogId } = req.params;
+    const { blogId } = req.params;
     const user = (req as any).user;
 
-            const blog = await client.blog.findUnique({ where: { id: blogId } });
+    const blog = await client.blog.findUnique({ where: { id: blogId } });
 
     if (!blog) {
-            return res.status(404).json({ message: "Blog not found" });
+      return res.status(404).json({ message: "Blog not found" });
     }
 
-        if (blog.isDeleted) {
-            return res.status(404).json({ message: "Blog not found" });
+    if (blog.isDeleted) {
+      return res.status(404).json({ message: "Blog not found" });
     }
 
     if (blog.authorId !== user.id) {
-            return res.status(403).json({ message: "Unauthorized" });
+      return res.status(403).json({ message: "Unauthorized" });
     }
 
     await client.blog.update({
@@ -129,7 +129,7 @@ export const deleteBlog = async (req: Request, res: Response) => {
       data: { isDeleted: true },
     });
 
-        res.status(204).send();
+    res.status(204).send();
   } catch (e) {
     console.error(" ERROR during deleteBlog operation:", e);
     res.status(500).json({ message: "Failed to delete blog" });

@@ -21,7 +21,7 @@ export const registerUser = async (req: Request, res: Response) => {
         avatar: avatarInitials,
       },
     });
-        res.status(201).json({ message: "registered successfully." });
+    res.status(201).json({ message: "registered successfully." });
   } catch (e) {
     console.error("ERROR: ", e);
     res.status(500).json({ message: "An error occured" });
@@ -33,7 +33,9 @@ export const loginUser = async (req: Request, res: Response) => {
     const { userHandle, password } = req.body;
 
     if (!userHandle || !password) {
-      return res.status(400).json({ message: "Both userHandle and password are required." });
+      return res
+        .status(400)
+        .json({ message: "Both userHandle and password are required." });
     }
 
     const user = await client.user.findFirst({
@@ -64,9 +66,13 @@ export const loginUser = async (req: Request, res: Response) => {
       expiresIn: "2h",
     });
 
-    res.status(200).json({ message: "logged in successfully.", token, user: userDetails });
+    res
+      .status(200)
+      .json({ message: "logged in successfully.", token, user: userDetails });
   } catch (e) {
     console.error("Login error: ", (e as Error).message);
-    res.status(500).json({ message: "An error occurred", error: (e as Error).message });
+    res
+      .status(500)
+      .json({ message: "An error occurred", error: (e as Error).message });
   }
 };
