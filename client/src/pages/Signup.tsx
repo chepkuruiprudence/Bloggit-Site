@@ -32,8 +32,6 @@ interface User {
   email: string;
 }
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
@@ -51,26 +49,28 @@ const Signup = () => {
   const toggleShowConfirmPassword = () =>
     setShowConfirmPassword((prev) => !prev);
 
-  const { isPending, mutate } = useMutation({
-    mutationKey: ["register-user"],
-    mutationFn: async (newUser: User) => {
-       const response = await axios.post(
-      `${API_URL}/api/auth/register`,
+  const BASE_URL = import.meta.env.DEV ? '' : import.meta.env.VITE_API_URL;
+
+const { isPending, mutate } = useMutation({
+  mutationKey: ["register-user"],
+  mutationFn: async (newUser: User) => {
+    const response = await axios.post(
+      `${BASE_URL}/api/auth/register`,
       newUser
     );
-      return response.data;
-    },
-    onError: (err) => {
-      if (axios.isAxiosError(err)) {
-        setFormError(err.response?.data.message);
-      } else {
-        setFormError("Something went wrong");
-      }
-    },
-    onSuccess: () => {
-      navigate("/login");
-    },
-  });
+    return response.data;
+  },
+  onError: (err) => {
+    if (axios.isAxiosError(err)) {
+      setFormError(err.response?.data.message);
+    } else {
+      setFormError("Something went wrong");
+    }
+  },
+  onSuccess: () => {
+    navigate("/login");
+  },
+});
 
   const handleSignUp = () => {
     setFormError("");
