@@ -32,6 +32,8 @@ interface User {
   email: string;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
@@ -52,10 +54,10 @@ const Signup = () => {
   const { isPending, mutate } = useMutation({
     mutationKey: ["register-user"],
     mutationFn: async (newUser: User) => {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        newUser
-      );
+       const response = await axios.post(
+      `${API_URL}/api/auth/register`,
+      newUser
+    );
       return response.data;
     },
     onError: (err) => {
