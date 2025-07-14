@@ -18,11 +18,14 @@ app.use(
 
    origin: [
   "https://bloggit-site-jrow-2hci0kewv-prudence-chepkuruis-projects.vercel.app",
+   "http://localhost:5173",
 ],
 
 
     methods: ["POST", "GET", "PUT", "PATCH", "DELETE"],
+    credentials: true,
   }),
+  
 );
 
 app.use("/api/auth", authRouter);
