@@ -16,7 +16,10 @@ app.use(
   cors({
     // origin: ["https://bloggit-site-backend.onrender.com"],
 
-    origin: ["https://bloggit-site-jrow-2hci0kewv-prudence-chepkuruis-projects.vercel.app/"],
+   origin: [
+  "https://bloggit-site-jrow-2hci0kewv-prudence-chepkuruis-projects.vercel.app",
+],
+
 
     methods: ["POST", "GET", "PUT", "PATCH", "DELETE"],
   }),
