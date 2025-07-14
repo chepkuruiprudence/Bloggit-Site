@@ -17,7 +17,7 @@ app.use(
     // origin: ["https://bloggit-site-backend.onrender.com"],
 
    origin: [
-  "https://bloggit-site-jrow-2hci0kewv-prudence-chepkuruis-projects.vercel.app",
+  "https://bloggit-site.vercel.app/",
    "http://localhost:5173",
 ],
 
