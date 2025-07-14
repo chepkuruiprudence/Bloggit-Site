@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-  target: 'https://bloggit-site-backend.onrender.com/', 
+  target: 'https://bloggit-site-database.onrender.com/', 
     changeOrigin: true,
     rewrite: (path) => path.replace(/^\/api/, ''),
       },
