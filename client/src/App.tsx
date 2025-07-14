@@ -11,9 +11,10 @@ import Myblogs from "./pages/Myblogs";
 import SingleBlog from "./components/Singleblog";
 import Profile from "./pages/Profile";
 import Bloglist from "./pages/Bloglist";
-
 import "./App.css";
 const client = new QueryClient();
+
+
 
 function App() {
   return (

@@ -63,7 +63,7 @@ const Login = () => {
         alignItems: "center",
         justifyContent: "center",
         minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#8EB69B"
       }}
     >
       <Card sx={{ width: "700px", padding: 3, backgroundColor: "#OC3B2E" }}>
