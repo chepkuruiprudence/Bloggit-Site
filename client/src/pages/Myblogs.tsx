@@ -23,6 +23,7 @@ interface Blog {
   };
   createdAt: string;
   avatar: string;
+  authorId: string;
 }
 
 const Myblogs = () => {
@@ -78,6 +79,7 @@ const Myblogs = () => {
                 secondName={blog.author.secondName}
                 createdAt={blog.createdAt}
                 avatar={blog.avatar}
+                authorId = {blog.authorId}
               />
             </Grid>
           ))}
