@@ -65,13 +65,23 @@ const Profile = () => {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: { xs: "column", md: "row" },
+        alignItems: "flex-start",
         justifyContent: "center",
         gap: 4,
+        padding: 2,
+        paddingTop: "80px",
       }}
     >
-      <Card sx={{ padding: 3, boxShadow: 3, width: "500px", marginTop: 10 }}>
+
+      <Card
+        sx={{
+          padding: 3,
+          boxShadow: 3,
+          width: { xs: "100%", sm: "90%", md: "500px" },
+          marginTop: { xs: 2, md: 6 },
+        }}
+      >
         <CardContent>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}>
             <Avatar
@@ -130,8 +140,14 @@ const Profile = () => {
           </Button>
         </CardContent>
       </Card>
-      <Box sx={{ marginTop: 4, width: "500px" }}>
-        <Card>
+
+      <Box
+        sx={{
+          width: { xs: "100%", sm: "90%", md: "500px" },
+          marginTop: { xs: 2, md: 6 },
+        }}
+      >
+        <Card sx={{ padding: 3, boxShadow: 3 }}>
           <Typography variant="h6" gutterBottom>
             Change Password
           </Typography>
