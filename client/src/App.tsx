@@ -28,11 +28,12 @@ function App() {
           <Route path="/Myblogs" element={<Myblogs />} />
           <Route path="/blogs/:blogId" element={<SingleBlog />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/blogs" element={<Bloglist />} />
+          
           </Route>
           <Route path="/" element={<Herosection />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/blogs" element={<Bloglist />} />
         </Routes>
         <Footer />
       </Router>
