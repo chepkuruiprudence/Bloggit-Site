@@ -14,13 +14,16 @@ app.use(express.json());
 
 
 
-const allowedOrigins = [
-  "http://localhost:5173",                     
-  "https://bloggit-site.vercel.app"           
-];
+// const allowedOrigins = [
+//   "http://localhost:5173",                     
+//   "https://bloggit-site.vercel.app"           
+// ];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: [
+  "http://localhost:5173",                     
+  "https://bloggit-site.vercel.app"           
+],
   credentials: true,           
 }));
 app.use("/api/auth", authRouter);
