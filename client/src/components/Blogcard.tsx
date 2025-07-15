@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import EditBlogForm from "./Editblog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../api/axios";
+import useUser from "../store/userStore";
 
 interface BlogCardProps {
   id: string;
@@ -23,6 +24,7 @@ interface BlogCardProps {
   secondName: string;
   createdAt: string;
   avatar: string;
+  authorId: string
 }
 
 const Blogcard: React.FC<BlogCardProps> = ({
@@ -33,8 +35,10 @@ const Blogcard: React.FC<BlogCardProps> = ({
   firstName,
   secondName,
   createdAt,
+  authorId,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const {user} = useUser();
 
   const queryClient = useQueryClient();
 
@@ -132,21 +136,26 @@ const Blogcard: React.FC<BlogCardProps> = ({
             Read More →
           </Button>
 
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "#609773" }}
-            onClick={() => setIsEditing(true)}
-          >
-            Edit
-          </Button>
+          {user?.id === authorId && (
+  <>
+    <Button
+      variant="contained"
+      sx={{ backgroundColor: "#609773" }}
+      onClick={() => setIsEditing(true)}
+    >
+      Edit
+    </Button>
 
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => deleteBlog()}
-          >
-            Delete
-          </Button>
+    <Button
+      variant="contained"
+      color="error"
+      onClick={() => deleteBlog()}
+    >
+      Delete
+    </Button>
+  </>
+)}
+
         </Stack>
       </CardContent>
     </Card>

@@ -7,6 +7,7 @@ interface User {
   secondName: string;
   email: string;
   password: string;
+  id: string;
 }
 
 interface UserStore {

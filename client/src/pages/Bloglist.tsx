@@ -37,6 +37,7 @@ const Bloglist = () => {
         firstName={blog.author?.firstName || "Anonymous"}
         secondName={blog.author?.secondName || ""}
         avatar={`${blog.avatar || ""}`}
+        authorId = {blog.authorId}
       />
     ))}
   </Box>
