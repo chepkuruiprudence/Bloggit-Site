@@ -6,6 +6,8 @@ import {
   CircularProgress,
   Alert,
   Stack,
+  Card,
+  CardContent,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import Blogcard from "../components/Blogcard";
@@ -20,7 +22,7 @@ interface Blog {
   author: {
     firstName: string;
     secondName: string;
-    id: string
+    id: string;
   };
   createdAt: string;
   avatar: string;
@@ -35,42 +37,30 @@ const Myblogs = () => {
       return response.data;
     },
   });
+
   if (isError) {
-    return <Typography>There was an error</Typography>;
+    return (
+      <Stack sx={{ p: 5 }} alignItems="center">
+        <Alert severity="error">Failed to load blogs: {error.message}</Alert>
+      </Stack>
+    );
   }
+
   if (isLoading) {
     return (
-      <Stack sx={{ p: 5 }} alignItems={"center"}>
+      <Stack sx={{ p: 5 }} alignItems="center">
         <CircularProgress />
-        <Typography>Loading Tasks...</Typography>
+        <Typography>Loading Blogs...</Typography>
       </Stack>
     );
   }
 
   return (
-    <Box sx={{ padding: 4 }}>
-      <Button
-        variant="contained"
-        sx={{ marginTop: 3, backgroundColor: "#609773" }}
-        component={Link}
-        to="/createBlog"
-      >
-        Create New Blog
-      </Button>
-
-      {isLoading && (
-        <Box sx={{ textAlign: "center", marginTop: 4 }}>
-          <CircularProgress />
-          <Typography>Loading blogs...</Typography>
-        </Box>
-      )}
-
-      {isError && <Alert severity="error">Failed to load blogs: {error}</Alert>}
-
-      <Grid container spacing={3} sx={{ marginTop: 2 }}>
+    <Box sx={{ paddingTop: "80px", paddingX: 2 }}>
+      <Grid container spacing={3}>
         {data &&
           data.map((blog) => (
-            <Grid key={blog.id} size={{ xs: 12, sm: 6, md: 4 }}>
+            <Grid key={blog.id} size = {{xs:12, sm:6, md:4}}>
               <Blogcard
                 id={blog.id}
                 title={blog.title}
@@ -80,18 +70,36 @@ const Myblogs = () => {
                 secondName={blog.author.secondName}
                 createdAt={blog.createdAt}
                 avatar={blog.avatar}
-                authorId = {blog.author.id}
+                authorId={blog.author.id}
               />
             </Grid>
           ))}
       </Grid>
 
       {data?.length === 0 && (
-  <Typography variant="h6" align="center" sx={{ mt: 4 }}>
-    You haven't created any blogs yet.
-  </Typography>
-)}
+        <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+          You haven't created any blogs yet.
+        </Typography>
+      )}
 
+      <Box sx={{ mt: 5, display: "flex", justifyContent: "center" }}>
+        <Card sx={{ width: "100%", maxWidth: 500, boxShadow: 3, borderRadius: 3 }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Ready to write something new?
+            </Typography>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#609773" }}
+              fullWidth
+              component={Link}
+              to="/createBlog"
+            >
+              Create New Blog
+            </Button>
+          </CardContent>
+        </Card>
+      </Box>
     </Box>
   );
 };

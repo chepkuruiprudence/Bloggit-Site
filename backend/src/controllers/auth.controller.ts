@@ -55,7 +55,7 @@ export const loginUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Wrong Credentials" });
     }
 
-    const { password: userPassword, avatar, updatedAt, ...userDetails } = user;
+    const { password: userPassword, updatedAt, ...userDetails } = user;
 
     const payload = {
       id: user.id,

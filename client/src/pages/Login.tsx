@@ -28,6 +28,7 @@ const Login = () => {
   const [userHandle, setUserHandle] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
+  
 
   const { isPending, mutate } = useMutation({
     mutationKey: ["login_user"],
@@ -47,7 +48,7 @@ const Login = () => {
     },
     onSuccess: (data) => {
       localStorage.setItem("token", data.token);
-      setUser(data);
+      setUser(data.user);
       navigate("/blogs");
     },
   });
