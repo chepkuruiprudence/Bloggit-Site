@@ -5,7 +5,7 @@ import {
   Container,
   CircularProgress,
   Alert,
-  Stack
+  Stack,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
@@ -39,7 +39,7 @@ const SingleBlog = () => {
       const response = await axiosInstance.get(`/api/blogs/${blogId}`);
       return response.data;
     },
-    enabled: !!blogId, 
+    enabled: !!blogId,
   });
 
   if (isLoading) {
@@ -66,20 +66,43 @@ const SingleBlog = () => {
   return (
     <Container
       maxWidth="md"
-      sx={{ mt: 6, border: "5px solid red", marginTop: 10, width: "500px" }}
+      sx={{
+        mt: { xs: 4, md: 8 },
+        p: { xs: 2, md: 4 },
+        backgroundColor: "#f9f9f9",
+        borderRadius: 2,
+        boxShadow: 2,
+      }}
     >
       <Box
         component="img"
         src={blog.image}
         alt="Featured Image"
-        sx={{ width: "100%", height: 400, borderRadius: 3, objectFit: "cover" }}
+        sx={{
+          width: "100%",
+          height: { xs: 200, sm: 300, md: 400 },
+          borderRadius: 2,
+          objectFit: "cover",
+        }}
       />
 
-      <Typography variant="h4" gutterBottom sx={{ mt: 3 }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ mt: 3, fontSize: { xs: "1.8rem", md: "2.4rem" } }}
+      >
         {blog.title}
       </Typography>
 
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 1.5,
+          mb: 3,
+          flexWrap: "wrap",
+        }}
+      >
         <Avatar src={blog.avatar}>
           {blog.author.firstName[0]}
           {blog.author.secondName[0]}
@@ -96,7 +119,11 @@ const SingleBlog = () => {
         </Typography>
       </Box>
 
-      <Typography variant="body1" component="div">
+      <Typography
+        variant="body1"
+        component="div"
+        sx={{ fontSize: { xs: "1rem", md: "1.1rem" }, lineHeight: 1.7 }}
+      >
         <ReactMarkdown>{blog.content}</ReactMarkdown>
       </Typography>
     </Container>

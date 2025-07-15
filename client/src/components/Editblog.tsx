@@ -41,15 +41,34 @@ const EditBlogForm = ({
   };
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", marginTop: 4 }}>
-      <Card sx={{ width: "500px", padding: 2 }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: 4,
+        paddingX: { xs: 2, sm: 4 },
+      }}
+    >
+      <Card
+        sx={{
+          width: "100%",
+          maxWidth: "600px",
+          padding: 2,
+          boxShadow: 3,
+        }}
+      >
         {imageUrl && (
           <CardMedia
             component="img"
-            height="200"
             image={imageUrl}
             alt="Blog Cover"
-            sx={{ borderRadius: "8px" }}
+            sx={{
+              height: { xs: 180, sm: 220, md: 250 },
+              width: "100%",
+              objectFit: "cover",
+              borderRadius: "8px",
+              mb: 2,
+            }}
           />
         )}
         <CardContent>
@@ -59,20 +78,23 @@ const EditBlogForm = ({
               variant="outlined"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              fullWidth
             />
             <TextField
               label="Image URL"
               variant="outlined"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
+              fullWidth
             />
             <TextField
               label="Synopsis"
               multiline
-              rows={4}
+              rows={3}
               variant="outlined"
               value={synopsis}
               onChange={(e) => setSynopsis(e.target.value)}
+              fullWidth
             />
             <TextField
               label="Content"
@@ -81,13 +103,24 @@ const EditBlogForm = ({
               variant="outlined"
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              fullWidth
             />
 
-            <Stack direction="row" spacing={2}>
-              <Button variant="contained" color="primary" onClick={handleSave}>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSave}
+                fullWidth
+              >
                 Save Changes
               </Button>
-              <Button variant="outlined" color="secondary" onClick={onCancel}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={onCancel}
+                fullWidth
+              >
                 Cancel
               </Button>
             </Stack>
