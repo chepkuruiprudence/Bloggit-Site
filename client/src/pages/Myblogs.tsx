@@ -20,6 +20,7 @@ interface Blog {
   author: {
     firstName: string;
     secondName: string;
+    id: string
   };
   createdAt: string;
   avatar: string;
