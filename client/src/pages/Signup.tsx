@@ -1,12 +1,10 @@
 import { useState } from "react";
 import "@fontsource/roboto/400.css";
-import HeroImage from "../assets/images/HeroImage.jpg";
 import {
   Card,
   CardContent,
   Stack,
   Button,
-  CardActions,
   Box,
   FormControl,
   InputLabel,
@@ -17,7 +15,6 @@ import {
   Paper,
   Alert,
   TextField,
-  CardMedia,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -95,113 +92,106 @@ const { isPending, mutate } = useMutation({
       }}
     >
       <Card
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          padding: 2,
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <CardContent>
-          <Paper component="form" sx={{ padding: 2 }}>
-            <Stack spacing={3}>
-              {formError && <Alert severity="error">{formError}</Alert>}
-              <Stack direction="row" spacing={2}>
-                <TextField
-                  label="First Name"
-                  fullWidth
-                  required
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-                <TextField
-                  label="Second Name"
-                  fullWidth
-                  required
-                  value={secondName}
-                  onChange={(e) => setSecondName(e.target.value)}
-                />
-              </Stack>
+  sx={{
+    display: "flex",
+    flexDirection: "column",
+    padding: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    maxWidth: 900,
+    width: "100%",
+  }}
+>
+  <CardContent sx={{ flex: 1, width: "100%" }}>
+    <Paper component="form" sx={{ padding: 2 }}>
+      <Stack spacing={3}>
+        {formError && <Alert severity="error">{formError}</Alert>}
 
-              <TextField
-                label="Username"
-                fullWidth
-                required
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-              />
-              <TextField
-                label="Email"
-                type="email"
-                fullWidth
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <TextField
+            label="First Name"
+            fullWidth
+            required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <TextField
+            label="Second Name"
+            fullWidth
+            required
+            value={secondName}
+            onChange={(e) => setSecondName(e.target.value)}
+          />
+        </Stack>
 
-              <FormControl variant="outlined" fullWidth required>
-                <InputLabel>Password</InputLabel>
-                <OutlinedInput
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  label="Password"
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton onClick={toggleShowPassword} edge="end">
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
+        <TextField
+          label="Username"
+          fullWidth
+          required
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+        <TextField
+          label="Email"
+          type="email"
+          fullWidth
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-              <FormControl variant="outlined" fullWidth required>
-                <InputLabel>Confirm Password</InputLabel>
-                <OutlinedInput
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  label="Confirm Password"
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={toggleShowConfirmPassword}
-                        edge="end"
-                      >
-                        {showConfirmPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <Button
-            variant="contained"
-            size="large"
-            onClick={handleSignUp}
-            disabled={isPending}
-            sx={{ backgroundColor: "#609773" }}
-          >
-            Sign Up
-          </Button>
-          <Typography>
+        <FormControl variant="outlined" fullWidth required>
+          <InputLabel>Password</InputLabel>
+          <OutlinedInput
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            label="Password"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton onClick={toggleShowPassword} edge="end">
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+
+        <FormControl variant="outlined" fullWidth required>
+          <InputLabel>Confirm Password</InputLabel>
+          <OutlinedInput
+            type={showConfirmPassword ? "text" : "password"}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            label="Confirm Password"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton onClick={toggleShowConfirmPassword} edge="end">
+                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+
+        <Button
+          variant="contained"
+          size="large"
+          onClick={handleSignUp}
+          disabled={isPending}
+          sx={{ backgroundColor: "#609773" }}
+        >
+          Sign Up
+        </Button>
+
+        <Typography>
           Already have an account? <Link to="/login">Login</Link>
         </Typography>
-            </Stack>
-          </Paper>
-        </CardContent>
+      </Stack>
+    </Paper>
+  </CardContent>
+</Card>
 
-        <CardActions sx={{ justifyContent: "center", paddingBottom: 2 }}>
-          
-        </CardActions>
-        
-        <CardMedia component="img" image={HeroImage} alt="Blog Image" sx = {{width:"50%"}} />
-      </Card>
     </Box>
   );
 };

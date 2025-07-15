@@ -6,20 +6,67 @@ import {
   Box,
   Button,
   Avatar,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import useUser from "../store/userStore";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Navbar = () => {
   const { user, logoutUser } = useUser();
   const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogout = () => {
-    logoutUser(); 
-    navigate("/"); 
+    logoutUser();
+    navigate("/");
   };
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const navLinks = user
+    ? [
+        { label: "Home", to: "/" },
+        { label: "My Blogs", to: "/MyBlogs" },
+        { label: "Create Blog", to: "/Createblog" },
+        { label: "Blogs", to: "/blogs" },
+        { label: "Profile", to: "/profile" },
+        { label: "Logout", onClick: handleLogout },
+      ]
+    : [
+        { label: "Home", to: "/" },
+        { label: "Login", to: "/login" },
+        { label: "Blogs", to: "/blogs" },
+        { label: "SignUp", to: "/signup" },
+      ];
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+      <Typography variant="h6" sx={{ my: 2, color: "white" }}>
+        Bloggit
+      </Typography>
+      <List>
+        {navLinks.map((item, index) => (
+          <ListItem
+            key={index}
+            component={item.to ? Link : "button"}
+            to={item.to}
+            onClick={item.onClick}
+            sx={{ color: "white" }}
+          >
+            <ListItemText primary={item.label} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 
   return (
     <AppBar
@@ -32,7 +79,8 @@ const Navbar = () => {
         <IconButton
           edge="start"
           aria-label="menu"
-          sx={{ mr: 2, color: "white", fontSize: "16px" }}
+          sx={{ mr: 2, color: "white", display: { md: "none" } }}
+          onClick={handleDrawerToggle}
         >
           <MenuIcon />
         </IconButton>
@@ -47,140 +95,69 @@ const Navbar = () => {
 
         <Box
           sx={{
-            display: "flex",
-            gap: 4,
+            display: { xs: "none", md: "flex" },
+            gap: 2,
             ml: "auto",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          {user ? (
-            <>
+          {navLinks.map((item, index) =>
+            item.to ? (
               <Button
-                variant="contained"
+                key={index}
+                variant="outlined"
                 sx={{
                   color: "white",
+                  borderColor: "white",
                   fontSize: "16px",
-                  backgroundColor: "#609773",
+                  "&:hover": { borderColor: "#fff" },
                 }}
                 component={Link}
-                to="/"
+                to={item.to}
               >
-                Home
+                {item.label}
               </Button>
+            ) : (
               <Button
+                key={index}
+                variant="outlined"
                 sx={{
                   color: "white",
+                  borderColor: "white",
                   fontSize: "16px",
-                  backgroundColor: "#609773",
+                  "&:hover": { borderColor: "#fff" },
                 }}
-                component={Link}
-                to="/MyBlogs"
+                onClick={item.onClick}
               >
-                My Blogs
+                {item.label}
               </Button>
-              <Button
-                sx={{
-                  color: "white",
-                  fontSize: "16px",
-                  backgroundColor: "#609773",
-                }}
-                component={Link}
-                to="/Createblog"
-              >
-                Create Blog
-              </Button>
-              <Button
-                sx={{
-                  color: "white",
-                  fontSize: "16px",
-                  backgroundColor: "#609773",
-                }}
-                component={Link}
-                to="/blogs"
-              >
-                Blogs
-              </Button>
-              <Button
-                sx={{
-                  color: "white",
-                  fontSize: "16px",
-                  backgroundColor: "#609773",
-                }}
-                component={Link}
-                to="/profile"
-              >
-                Profile
-              </Button>
-              <Button
-                onClick={handleLogout}
-                sx={{
-                  color: "white",
-                  fontSize: "16px",
-                  backgroundColor: "#C62828",
-                }}
-              >
-                Logout
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                variant="contained"
-                sx={{
-                  color: "white",
-                  fontSize: "16px",
-                  backgroundColor: "#609773",
-                }}
-                component={Link}
-                to="/"
-              >
-                Home
-              </Button>
-              <Button
-                sx={{
-                  color: "white",
-                  fontSize: "16px",
-                  backgroundColor: "#609773",
-                }}
-                component={Link}
-                to="/login"
-              >
-                Login
-              </Button>
-              <Button
-                sx={{
-                  color: "white",
-                  fontSize: "16px",
-                  backgroundColor: "#609773",
-                }}
-                component={Link}
-                to="/blogs"
-              >
-                Blogs
-              </Button>
-              <Button
-                sx={{
-                  color: "white",
-                  fontSize: "16px",
-                  backgroundColor: "#609773",
-                }}
-                component={Link}
-                to="/signup"
-              >
-                SignUp
-              </Button>
-            </>
+            )
           )}
         </Box>
 
         {user && (
-          <Avatar sx={{ ml: 1 }} component={Link} to="/profile">
+          <Avatar
+            sx={{ ml: 1, display: { xs: "none", md: "flex" } }}
+            component={Link}
+            to="/profile"
+          >
             {user.firstName?.[0]?.toUpperCase() || ""}
             {user.secondName?.[0]?.toUpperCase() || ""}
           </Avatar>
         )}
       </Toolbar>
+
+      <Drawer
+        anchor="left"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        PaperProps={{
+          sx: { backgroundColor: "#0C3B2E", color: "white", width: 220 },
+        }}
+      >
+        {drawer}
+      </Drawer>
     </AppBar>
   );
 };
