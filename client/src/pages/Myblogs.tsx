@@ -79,7 +79,7 @@ const Myblogs = () => {
                 secondName={blog.author.secondName}
                 createdAt={blog.createdAt}
                 avatar={blog.avatar}
-                authorId = {blog.authorId}
+                authorId = {blog.author.id}
               />
             </Grid>
           ))}

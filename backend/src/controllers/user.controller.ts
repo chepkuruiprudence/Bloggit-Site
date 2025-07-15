@@ -93,6 +93,7 @@ export const getUserBlogs = async (req: Request, res: Response) => {
           select: {
             firstName: true,
             secondName: true,
+            id: true,
           },
         },
       },
